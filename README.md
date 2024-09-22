@@ -1,2 +1,2 @@
-Süperlig maçlarını liste şeklinde görebildiğiniz , gün seçip fikstüre bakabildiğiniz ,maça tıklyıp o maçın detaylarını görebildiğiniz bir futbol fikstür uygulamasıdır. Projede MVVM , glide , retrofit kullanılmıştır.
-https://rapidapi.com/api-sports/api/api-football verileri canlı olarak çektiğim site.
+Ai ile metne göre oluşturulan fotoğrafları telefonunuza duvar kağıdı olarak ayarlayan bir uygulama.
+https://docs.modelslab.com/image-generation/realtime-stable-diffusion/text2img görsel oluşturan ai sitesi.
