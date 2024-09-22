@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.brk.basic.R
 import com.brk.basic.model.responses.FixtureDetail
-import com.brk.basic.view.DetayActivity
+
 import com.bumptech.glide.Glide
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -44,19 +44,7 @@ class FixtureAdapter(private val fixtureList: List<FixtureDetail>) :
         val cityName = fixture.fixture.venue.city ?: "Unknown City"
 
         // Tıklama olayını ayarla
-        holder.itemView.setOnClickListener {
-            val context = it.context
-            val intent = Intent(context, DetayActivity::class.java).apply {
-                putExtra("HOME_TEAM_NAME", fixture.teams.home.name)
-                putExtra("AWAY_TEAM_NAME", fixture.teams.away.name)
-                putExtra("MATCH_DATE", matchDate)
-                putExtra("MATCH_SCORE", "${homeGoals} - ${awayGoals}") // Skor bilgisini ekle
-                putExtra("REFEREE", fixture.fixture.referee)
-                putExtra("VENUE_NAME", fixture.fixture.venue.name)
-                putExtra("CITY_NAME", cityName)  // Added city name
-            }
-            context.startActivity(intent)
-        }
+
     }
     private fun formatDate(dateString: String): String {
         val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.getDefault())

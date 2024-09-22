@@ -1,11 +1,17 @@
 package com.brk.basic.data.api
 
-import retrofit2.http.Query
+import ApiInterface
+import com.brk.basic.model.responses.ImageResponse
+import com.brk.basic.data.TextToImageRequest
+import retrofit2.Call
+
 
 class ApiHelper(private val apiInterface: ApiInterface) {
 
-    suspend fun getFixtures() = apiInterface.getFixtures()
+
+    fun generateImage(request: TextToImageRequest): Call<ImageResponse> {
+        return apiInterface.generateImage(request)
+    }
 
 
-    suspend fun getFixturesDate(league: Int, season: Int,from: String, to: String) = apiInterface.getFixturesDate(league,season,from,to)
 }

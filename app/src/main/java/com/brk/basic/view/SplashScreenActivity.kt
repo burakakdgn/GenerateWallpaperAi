@@ -22,7 +22,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
         Glide.with(this)
             .asGif()
-            .load(R.raw.animation)  // Replace with your GIF resource
+            .load(R.raw.gif)  // Replace with your GIF resource
             .into(binding.imageView11)
 
         Handler().postDelayed({

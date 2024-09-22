@@ -1,44 +1,45 @@
-package com.brk.basic.viewmodel
-
-import androidx.lifecycle.LiveData
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.brk.basic.data.TextToImageRequest
 import com.brk.basic.data.repositories.GenelRepository
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import com.brk.basic.model.responses.ImageResponse
 
-import androidx.lifecycle.liveData
-import com.brk.basic.model.responses.FixtureResponse
-import com.brk.basic.utils.Resource
-import kotlinx.coroutines.Dispatchers
+class GenelViewModel(private val apiHelper: GenelRepository) : ViewModel() {
 
-class GenelViewModel(private val genelRepository: GenelRepository): ViewModel() {
+    val imageLiveData: MutableLiveData<String?> = MutableLiveData()
 
-
-    fun getFixtures() = liveData(Dispatchers.IO) {
-        emit(Resource.loading(data = null))
-        try {
-            val response = genelRepository.getFixtures()
-            if (response.isSuccessful) {
-                emit(Resource.success(data = response.body())) // body() ile FixtureResponse nesnesine erişim
-            } else {
-                emit(Resource.error(data = null, message = response.message()))
+    fun generateImageFromText(text: String) {
+        val request = TextToImageRequest(
+            key = "YOUR API KEY ",  // Gerekli API anahtarını buraya ekleyin
+            prompt = text,
+            negative_prompt = "bad quality",
+            width = "512",
+            height = "512",
+            safety_checker = false,
+            seed = 2345,
+            sample = 1,
+            webhook = null,
+            track_id = 20
+        )
+        apiHelper.generateImage(request).enqueue(object : Callback<ImageResponse> {
+            override fun onResponse(call: Call<ImageResponse>, response: Response<ImageResponse>) {
+                if (response.isSuccessful) {
+                    val imageUrl = response.body()?.proxy_links?.firstOrNull()
+                    Log.d("GenelViewModel", "Image URL: $imageUrl")
+                    imageLiveData.postValue(imageUrl)
+                } else {
+                    val errorBody = response.errorBody()?.string()
+                    Log.e("GenelViewModel", "Error: $errorBody")
+                }
             }
-        } catch (exception: Exception) {
-            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
-        }
-    }
 
-    fun getFixturesDate(league: Int, season: Int, fromDate: String, toDate: String) = liveData(Dispatchers.IO) {
-        emit(Resource.loading(data = null))
-        try {
-            val response = genelRepository.getFixturesDate(league, season, fromDate, toDate)
-            if (response.isSuccessful) {
-                emit(Resource.success(data = response.body())) // body() ile FixtureResponse nesnesine erişim
-            } else {
-                emit(Resource.error(data = null, message = response.message()))
+            override fun onFailure(call: Call<ImageResponse>, t: Throwable) {
+                Log.e("GenelViewModel", "Failure: ${t.message}")
             }
-        } catch (exception: Exception) {
-            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
-        }
+        })
     }
-
-
 }

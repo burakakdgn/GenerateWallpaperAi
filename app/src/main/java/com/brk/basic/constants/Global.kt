@@ -8,6 +8,7 @@ class Global {
 
 
         final const val baseUrl = "https://api-football-v1.p.rapidapi.com/"
+
         var from : String = ""
         var to : String = ""
     }

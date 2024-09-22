@@ -83,8 +83,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
 
     //Glide
-    implementation 'com.github.bumptech.glide:glide:4.13.2'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
+    implementation 'com.github.bumptech.glide:glide:4.15.0' // Güncel sürüm numarasını kontrol edin
+    kapt 'com.github.bumptech.glide:compiler:4.15.0'
 
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
